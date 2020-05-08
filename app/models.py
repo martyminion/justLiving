@@ -1,5 +1,5 @@
 from . import db
-
+from werkzeug.security import generate_password_hash,check_password_hash
 class Writer(db.Model):
   '''
   describes the attributes we will require from a writer
@@ -11,9 +11,18 @@ class Writer(db.Model):
   pass_secure = db.Column(db.String())
   prof_pic = db.Column(db.String())
   bio = db.Column(db.String())
-  role_id = db.Column(db.Integer)
+  role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
 
+  @property
+  def password(self):
+    raise AttributeError('You cannot read the password attribute')
 
+  @password.setter
+  def password(self, password):
+    self.pass_secure = generate_password_hash(password)
+
+  def verify_password(self,password):
+    return check_password_hash(self.pass_secure,password)
 
 class Reader(db.Model):
   '''
@@ -28,6 +37,17 @@ class Reader(db.Model):
 
   comments = db.relationship('Comment',backref = 'comment', lazy = 'dynamic')
 
+  @property
+  def password(self):
+    raise AttributeError('You cannot read the password attribute')
+
+  @password.setter
+  def password(self, password):
+    self.pass_secure = generate_password_hash(password)
+
+  def verify_password(self,password):
+    return check_password_hash(self.pass_secure,password)
+
 class Roles(db.Model):
   '''
   defines the 2 roles of either reader or writer
@@ -35,7 +55,7 @@ class Roles(db.Model):
   __tablename__ = "roles"
   id = db.Column(db.Integer,primary_key = True)
   name = db.Column(db.String(255))
-
+  users = db.relationship('Writer',backref = 'role', lazy = 'dynamic')
   
 
 class Blog(db.Model):

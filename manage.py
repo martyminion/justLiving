@@ -1,13 +1,16 @@
 from app import create_app,db
 from flask_script import Manager,Server,Shell
 from app.models import Writer,Reader,Roles,Comment,Blog
+from flask_migrate import Migrate,MigrateCommand
 
 #create an app instancea
 app = create_app('development')
 
 manager = Manager(app)
-manager.add_command('server',Server)
+migrate = Migrate(app,db)
 
+manager.add_command('server',Server)
+manager.add_command('db',MigrateCommand)
 @manager.shell
 def make_shell_context():
   return dict(app = app, db = db, Writer = Writer, Reader = Reader, Comment = Comment, Roles = Roles, Blog = Blog)
