@@ -1,6 +1,11 @@
 from . import db
 from werkzeug.security import generate_password_hash,check_password_hash
-class Writer(db.Model):
+from flask_login import UserMixin
+from . import login_manager
+
+
+
+class Writer(db.Model,UserMixin):
   '''
   describes the attributes we will require from a writer
   '''
@@ -24,7 +29,14 @@ class Writer(db.Model):
   def verify_password(self,password):
     return check_password_hash(self.pass_secure,password)
 
-class Reader(db.Model):
+  @login_manager.user_loader
+  def load_user(writer_id):
+    '''
+    call back function that returns the writer when a unique identifier is passed
+    '''
+    return Writer.query.get(int(writer_id))
+
+class Reader(db.Model,UserMixin):
   '''
   describes the attributes of a user
   '''
@@ -47,6 +59,13 @@ class Reader(db.Model):
 
   def verify_password(self,password):
     return check_password_hash(self.pass_secure,password)
+
+  @login_manager.user_loader
+  def load_user(reader_id):
+    '''
+    call back function that returns the reader when a unique identifier is passed
+    '''
+    return Reader.query.get(int(reader_id))
 
 class Roles(db.Model):
   '''
