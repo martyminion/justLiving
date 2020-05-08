@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,IntegerField,PasswordField,SelectField,SubmitField
+from wtforms import StringField,IntegerField,PasswordField,SelectField,SubmitField,BooleanField
 from wtforms.validators import email,Required,Email,EqualTo
 from ..models import Writer,Reader
 from wtforms import ValidationError
@@ -29,3 +29,13 @@ class RegistrationForm(FlaskForm):
     '''
     if Reader.query.filter_by(username = data_field.data).first():
       raise ValidationError("This username is soo cool it's taken")
+
+class LoginForm(FlaskForm):
+  '''
+  form to be filled during log in
+  '''
+  role = SelectField("Sign in as: ",choices=[("reader","reader"),("writer":"writer")],validators=[Required()])
+  email = StringField("Please enter your email")
+  password = PasswordField("Let's see if you remember your password")
+  remember = BooleanField("Remember me")
+  submit = SubmitField("Always nice to see you")
