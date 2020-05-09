@@ -1,6 +1,6 @@
 from flask import render_template,redirect,request,abort
 from . import main
-from flask_login import login_required
+from flask_login import login_required,current_user
 from ..models import Blog,Comment,Reader
 from .. import db
 from .forms import BlogForm,CommentForm
@@ -29,8 +29,8 @@ def single_blog(blogid):
   '''
   displays a single blog
   '''
-  comments = Comment.query.filter_by(blog_id = blogid).all()
-  one_blog = Blog.query.filter_by(id = blogid).first()
+  comments = Comment.get_comments_by_blog_id(blogid)
+  one_blog = Blog.get_blog_by_id(blogid)
   title = one_blog.title
 
   render_template('singleblog.html',title = title, one_blog = one_blog,comments = comments)

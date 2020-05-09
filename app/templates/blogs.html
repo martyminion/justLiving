@@ -1,0 +1,14 @@
+{%extends 'base.html'%}
+
+{%block content%}
+  <div class="container">
+    {%for blog in blogs%}
+    <div>
+      <h2>{{blog.title}}</h2>
+      <p>{{blog.category}}</p>
+      <p>{{blog.blog_body| truncate(100)}}...</p>
+      <a href="{{url_for('main.single_blog',blogid = blog.id)}}">Read more</a>
+    </div>
+    {%endfor%}
+  </div>
+{%endblock%}
