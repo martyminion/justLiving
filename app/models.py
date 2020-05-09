@@ -18,16 +18,13 @@ class Writer(db.Model,UserMixin):
   bio = db.Column(db.String())
   role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
 
-  @property
-  def password(self):
-    raise AttributeError('You cannot read the password attribute')
-
-  @password.setter
-  def password(self, password):
-    self.pass_secure = generate_password_hash(password)
 
   def verify_password(self,password):
-    return check_password_hash(self.pass_secure,password)
+    if self.pass_secure == password:
+      return True
+    else:
+      return False
+    
 
   @login_manager.user_loader
   def load_user(writer_id):
