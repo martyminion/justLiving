@@ -16,7 +16,7 @@
       <p>{{comment.comment_body}}</p>
       <cite>{{comment.feedback.username}}</cite>
       {%if current_user.role_id == 1%}
-        <a href="#">Delete Comment</a>
+        <a href="{{url_for('main.delete_comment',commentid = comment.id)}}">Delete Comment</a>
       {%endif%}
       {%endfor%}
       <a href="{{url_for('main.add_comment',blogid = one_blog.id, readername = current_user.username)}}"> Add comment</a>

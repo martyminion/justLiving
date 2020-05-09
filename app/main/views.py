@@ -1,4 +1,4 @@
-from flask import render_template,redirect,request,abort
+from flask import render_template,redirect,request,abort,url_for
 from . import main
 from flask_login import login_required,current_user
 from ..models import Blog,Comment,Reader
@@ -63,3 +63,15 @@ def add_comment(readername,blogid):
   #####return redirect('')
   title = 'New Comment'
   return render_template("newcomment.html",comment_form = comment_form, title = title)
+
+@main.route('/<commentid>/comment/delete')
+@login_required
+def delete_comment(commentid):
+  '''
+  deletes a comment
+  '''
+  delete_comment = Comment.query.filter_by(id = commentid).first()
+  db.session.delete(delete_comment)
+  db.session.commit()
+
+  return redirect(request.referrer)
