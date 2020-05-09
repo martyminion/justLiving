@@ -9,8 +9,8 @@ class RegistrationForm(FlaskForm):
   form to be filled by a new reader
   '''
   email = StringField("Please Enter you email", validators=[Required(),email()])
-  username = StringField("Enter a cool Username", validators=[Required])
-  password = PasswordField("Enter a password you can remember", validators=[Required],EqualTo('password_confirm',message="You already Forgot the Password"))
+  username = StringField("Enter a cool Username", validators=[Required()])
+  password = PasswordField("Enter a password you can remember",validators=[Required(),EqualTo('password_confirm',message="You already Forgot the Password")])
   password_confirm = PasswordField('Can you remember the password', validators=[Required()])
   submit = SubmitField('Sign Up')
 
@@ -34,8 +34,8 @@ class LoginForm(FlaskForm):
   '''
   form to be filled during log in
   '''
-  role = SelectField("Sign in as: ",choices=[("reader","reader"),("writer":"writer")],validators=[Required()])
-  email = StringField("Please enter your email")
-  password = PasswordField("Let's see if you remember your password")
+  role = SelectField("Sign in as: ",choices=[("reader","reader"),("writer","writer")],validators=[Required()])
+  email = StringField("Please enter your email",validators=[Required()])
+  password = PasswordField("Let's see if you remember your password",validators=[Required()])
   remember = BooleanField("Remember me")
   submit = SubmitField("Always nice to see you")

@@ -4,7 +4,7 @@ class Config():
   '''
   sets up the config attributes to be inherited by other config options
   '''
-  pass
+  SECRET_KEY = os.environ.get('SECRET_KEY') 
 
 class ProdConfig(Config):
   '''

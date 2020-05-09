@@ -14,9 +14,9 @@
       {%endfor%}
 
       <!--Login Form-->
-      {wtf.quick_form(login_form)}
+      {{wtf.quick_form(login_form)}}
 
-      <p>Not yet a reader <a href="{{url_for('auth/register')}}">Sign up here</a></p>
+      <p>Not yet a reader <a href="{{url_for('auth.register')}}">Sign up here</a></p>
     </div>
     <div class="col-md-2">
 

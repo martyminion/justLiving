@@ -9,7 +9,7 @@ class Writer(db.Model,UserMixin):
   '''
   describes the attributes we will require from a writer
   '''
-  __tablename__="users"
+  __tablename__="writers"
   id = db.Column(db.Integer,primary_key = True)
   email = db.Column(db.String(255),unique = True, index = True)
   username = db.Column(db.String(255),index = True)
@@ -47,7 +47,7 @@ class Reader(db.Model,UserMixin):
   pass_secure = db.Column(db.String())
   role_id = db.Column(db.Integer)
 
-  comments = db.relationship('Comment',backref = 'comment', lazy = 'dynamic')
+  comments = db.relationship('Comment',backref = 'feedback', lazy = 'dynamic')
 
   @property
   def password(self):
