@@ -7,15 +7,18 @@ from .forms import BlogForm,CommentForm
 import markdown2
 from .. import mail
 from flask_mail import Message
+from ..requests import get_quotes
+
 @main.route('/')
 def index():
   '''
   this will define the view to go to the home page
   '''
-  
+  quote = get_quotes()
+
   title = "Homepage"
 
-  return render_template('index.html',title  = title)
+  return render_template('index.html',title  = title, quote = quote)
 
 @main.route('/blogs')
 def view_blogs():
@@ -94,6 +97,8 @@ def delete_comment(commentid):
   db.session.commit()
 
   return redirect(request.referrer)
+
+
 
 # @main.route('/send/mail')
 # @login_required

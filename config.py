@@ -17,6 +17,10 @@ class Config():
   MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
   MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
   MAIL_DEFAULT_SENDER = 'wawerulawrence@gmail.com'
+  #random quote api config
+
+  RANDOM_QUOTE_URL = "http://quotes.stormconsultancy.co.uk/random.json"
+
 
 class ProdConfig(Config):
   '''
