@@ -4,7 +4,9 @@ from flask_login import login_required,current_user
 from ..models import Blog,Comment,User
 from .. import db
 from .forms import BlogForm,CommentForm
-
+import markdown2
+from .. import mail
+from flask_mail import Message
 @main.route('/')
 def index():
   '''
@@ -31,9 +33,13 @@ def single_blog(blogid):
   '''
   comments = Comment.get_comments_by_blog_id(blogid)
   one_blog = Blog.get_blog_by_id(blogid)
+  if one_blog is None:
+    abort(404)
+
+  format_blog = markdown2.markdown(one_blog.blog_body,extras=["code-friendly","fenced-code-blocks"])
   title = one_blog.title
 
-  return render_template('singleblog.html',title = title, one_blog = one_blog,comments = comments)
+  return render_template('singleblog.html',title = title, format_blog = format_blog,comments = comments,one_blog = one_blog)
 
 @main.route('/new/blog',methods = ["GET","POST"])
 @login_required
@@ -46,6 +52,19 @@ def add_blog():
   if blog_form.validate_on_submit():
     new_blog = Blog(title = blog_form.title.data, category = blog_form.category.data, blog_body = blog_form.body.data)
     new_blog.save_blog()
+    '''
+    send bulk emails to all the readers
+    '''
+    readers = User.query.filter_by(role_id = 2).all()
+    with mail.connect() as con:
+      for reader in readers:
+        subject = f"Check out {new_blog.title} on Just Living"
+        email = Message(subject = subject, recipients = [reader.email])
+        email.body = render_template('email/welcome_user.txt')
+        email.html = render_template('email/welcome_user.html')
+
+        con.send(email)
+      
     return redirect(url_for('main.view_blogs'))
   title = "New Blog"
   return render_template('newblog.html',blogform = blog_form, title = title)
@@ -75,3 +94,21 @@ def delete_comment(commentid):
   db.session.commit()
 
   return redirect(request.referrer)
+
+# @main.route('/send/mail')
+# @login_required
+# def send_emails():
+#   '''
+#   sends bulk emails to all the readers
+#   '''
+#   readers = User.query.filter_by(role_id = 2).all()
+#   with mail.connect() as con:
+#     for reader in readers:
+#       subject = f"Welcome {reader.username} to Just Living"
+#       email = Message(subject = subject, recipients = [reader.email])
+#       email.body = render_template(template + 'email/welcome_user.txt',**kwargs)
+#       email.html = render_template(template +'email/welcome_user.html',**kwargs)
+
+#       con.send(email)
+  
+#   return redirect(request.referrer)

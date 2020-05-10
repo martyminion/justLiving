@@ -6,7 +6,7 @@
     <div>
       <h2>{{one_blog.title}}</h2>
       <h4>{{one_blog.category}}</h4>
-      <p>{{one_blog.blog_body}}</p>
+      <p>{{format_blog|safe}}</p>
     </div>
 
     <div>
@@ -15,6 +15,7 @@
       {%for comment in comments%}
       <p>{{comment.comment_body}}</p>
       <cite>{{comment.feedback.username}}</cite>
+      <br>
       {%if current_user.role_id == 1%}
         <a href="{{url_for('main.delete_comment',commentid = comment.id)}}">Delete Comment</a>
       {%endif%}

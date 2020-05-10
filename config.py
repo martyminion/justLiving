@@ -5,6 +5,18 @@ class Config():
   sets up the config attributes to be inherited by other config options
   '''
   SECRET_KEY = os.environ.get('SECRET_KEY') 
+  #configs for SimpleMDE
+
+  SIMPLEMDE_JS_IIFE = True
+  SIMPLEMDE_USE_CDN = True
+
+  #email configurations
+  MAIL_SERVER = 'smtp.googlemail.com'
+  MAIL_PORT = 587
+  MAIL_USE_TLS = True
+  MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+  MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+  MAIL_DEFAULT_SENDER = 'wawerulawrence@gmail.com'
 
 class ProdConfig(Config):
   '''
