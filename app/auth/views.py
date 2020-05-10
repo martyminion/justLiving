@@ -1,7 +1,7 @@
 from flask import render_template,redirect,request,url_for,flash
 from . import auth
 from .forms import RegistrationForm,LoginForm
-from ..models import Writer,Reader
+from ..models import Reader,Writer
 from flask_login import login_user,logout_user,login_required
 from .. import db
 @auth.route('/login',methods = ['GET','POST'])
@@ -22,7 +22,7 @@ def login():
       if writer is not None and writer.verify_password(login_form.password.data):
         login_user(writer,login_form.remember.data)
         return redirect(request.args.get('next') or url_for('main.index'))
-
+      
     elif login_form.role.data == "reader":
       writer = Writer.query.filter_by(email = login_form.email.data).first()
       if writer is not None:

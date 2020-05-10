@@ -24,7 +24,6 @@ class Writer(db.Model,UserMixin):
       return True
     else:
       return False
-    
 
   @login_manager.user_loader
   def load_user(writer_id):
@@ -63,6 +62,8 @@ class Reader(db.Model,UserMixin):
     call back function that returns the reader when a unique identifier is passed
     '''
     return Reader.query.get(int(reader_id))
+
+
 
 class Roles(db.Model):
   '''
