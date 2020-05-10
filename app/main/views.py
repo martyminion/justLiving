@@ -58,7 +58,7 @@ def add_comment(readername,blogid):
 
   comment_form = CommentForm()
   if comment_form.validate_on_submit():
-    comment = Comment(comment_body = comment_form.body.data,blog_id = blogid, reader_id = reader.id )
+    comment = Comment(comment_body = comment_form.body.data,blog_id = blogid, user_id = reader.id )
     comment.save_comment()
     return redirect(url_for('main.single_blog',blogid = blogid))
   title = 'New Comment'

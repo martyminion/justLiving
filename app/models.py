@@ -17,7 +17,7 @@ class User(db.Model,UserMixin):
   prof_pic = db.Column(db.String())
   bio = db.Column(db.String())
   role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
-
+  comments = db.relationship('Comment',backref = 'feedback', lazy = 'dynamic')
 
   @property
   def password(self):
@@ -98,6 +98,6 @@ class Comment(db.Model):
     '''
     gets the comments for a particular blog
     '''
-    comments = Comment.query.filter_by(id = blog_id).all()
+    comments = Comment.query.filter_by(blog_id = blog_id).all()
 
     return comments

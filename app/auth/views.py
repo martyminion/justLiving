@@ -44,8 +44,9 @@ def register():
   form = RegistrationForm()
 
   if form.validate_on_submit():
-    if User.query.filter_by(role_id = 1).first():
+    if form.choice.data == 'writer' and User.query.filter_by(role_id = 1).first():
       flash("You cannot Sign in as a Writer")
+      return render_template('auth/register.html',registration_form = form)
     user = User(email = form.email.data,username = form.username.data,password = form.password.data)
     if form.choice.data == 'writer':
       user.role_id = 1
