@@ -1,7 +1,7 @@
 from flask import render_template,redirect,request,abort,url_for
 from . import main
 from flask_login import login_required,current_user
-from ..models import Blog,Comment,Reader
+from ..models import Blog,Comment,User
 from .. import db
 from .forms import BlogForm,CommentForm
 
@@ -53,7 +53,7 @@ def add_blog():
 @main.route('/<readername>/<blogid>/new/comment',methods = ["GET","POST"])
 @login_required
 def add_comment(readername,blogid):
-  reader = Reader.query.filter_by(username = readername).first()
+  reader = User.query.filter_by(username = readername).first()
   blog = Blog.query.filter_by(id = blogid).first()
 
   comment_form = CommentForm()

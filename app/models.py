@@ -5,11 +5,11 @@ from . import login_manager
 
 
 
-class Writer(db.Model,UserMixin):
+class User(db.Model,UserMixin):
   '''
   describes the attributes we will require from a writer
   '''
-  __tablename__="writers"
+  __tablename__="users"
   id = db.Column(db.Integer,primary_key = True)
   email = db.Column(db.String(255),unique = True, index = True)
   username = db.Column(db.String(255),index = True)
@@ -18,32 +18,6 @@ class Writer(db.Model,UserMixin):
   bio = db.Column(db.String())
   role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
 
-
-  def verify_password(self,password):
-    if self.pass_secure == password:
-      return True
-    else:
-      return False
-
-  @login_manager.user_loader
-  def load_user(writer_id):
-    '''
-    call back function that returns the writer when a unique identifier is passed
-    '''
-    return Writer.query.get(int(writer_id))
-
-class Reader(db.Model,UserMixin):
-  '''
-  describes the attributes of a user
-  '''
-  __tablename__ = "readers"
-  id = db.Column(db.Integer,primary_key = True)
-  email = db.Column(db.String(255),unique = True, index = True)
-  username = db.Column(db.String(255),index = True)
-  pass_secure = db.Column(db.String())
-  role_id = db.Column(db.Integer)
-
-  comments = db.relationship('Comment',backref = 'feedback', lazy = 'dynamic')
 
   @property
   def password(self):
@@ -57,13 +31,11 @@ class Reader(db.Model,UserMixin):
     return check_password_hash(self.pass_secure,password)
 
   @login_manager.user_loader
-  def load_user(reader_id):
+  def load_user(user_id):
     '''
     call back function that returns the reader when a unique identifier is passed
     '''
-    return Reader.query.get(int(reader_id))
-
-
+    return User.query.get(int(user_id))
 
 class Roles(db.Model):
   '''
@@ -72,7 +44,7 @@ class Roles(db.Model):
   __tablename__ = "roles"
   id = db.Column(db.Integer,primary_key = True)
   name = db.Column(db.String(255))
-  users = db.relationship('Writer',backref = 'role', lazy = 'dynamic')
+  users = db.relationship('User',backref = 'role', lazy = 'dynamic')
   
 
 class Blog(db.Model):
@@ -112,7 +84,7 @@ class Comment(db.Model):
   id = db.Column(db.Integer,primary_key = True)
   comment_body = db.Column(db.String())
   blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'))
-  reader_id = db.Column(db.Integer, db.ForeignKey('readers.id'))
+  user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
   def save_comment(self):
     '''
