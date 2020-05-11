@@ -1,37 +1,56 @@
 {%extends 'base.html'%}
 
+{%block styles%}
+{{super()}}
+<!--Imports the simple mde css and js files-->
+<link rel="stylesheet" href="{{url_for('static',filename = 'css/singleblog.css')}}">
+<link
+  href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Galada&family=Inconsolata:wght@300&family=Pacifico&display=swap"
+  rel="stylesheet">
+{%endblock%}
+
 {%block content%}
-  <div class="container text-center">
-    
-    <div>
-      <h2>{{one_blog.title}}</h2>
-      <h4>{{one_blog.category}}</h4>
-      <p>{{format_blog|safe}}</p>
+<div class="container text-center">
+  <div class="row">
+    <div class="col-md-2">
+
     </div>
-    <div>
-      {%if current_user.role_id == 1%}
+    <div class="col-md-8 blogapp">
+      <div>
+        <h2 class="blogtitle">{{one_blog.title}}</h2>
+        <h4>{{one_blog.category}}</h4>
+        <p class="blogtext">{{format_blog|safe}}</p>
+      </div>
+      <div>
+        {%if current_user.role_id == 1%}
         <a href="{{url_for('main.edit_blog',blogid = one_blog.id)}}">Update Blog</a>
         <a href="{{url_for('main.delete_blog',blogid = one_blog.id)}}">Delete Blog</a>
-      {%endif%}
-    </div>
+        {%endif%}
+      </div>
 
-    <div>
-      <h3>Comments</h3>
-      {%if comments%}
-      {%for comment in comments%}
-      <p>{{comment.comment_body}}</p>
-      <cite>{{comment.feedback.username}}</cite>
-      <br>
-      {%if current_user.role_id == 1%}
+      <div>
+        <h3>Comments</h3>
+        {%if comments%}
+        {%for comment in comments%}
+        <p class="blogtext">{{comment.comment_body}}</p>
+        <cite>{{comment.feedback.username}}</cite>
+        <br>
+        {%if current_user.role_id == 1%}
         <a href="{{url_for('main.delete_comment',commentid = comment.id)}}">Delete Comment</a>
-      {%endif%}
-      {%endfor%}
-      <a href="{{url_for('main.add_comment',blogid = one_blog.id, readername = current_user.username)}}"> Add comment</a>
-      {%else%}
-      <p>There are no comments yet</p>
-      <a href="{{url_for('main.add_comment',blogid = one_blog.id, readername = current_user.username)}}"> Be the first to comment</a>
-      {%endif%}
+        {%endif%}
+        {%endfor%}
+        <a href="{{url_for('main.add_comment',blogid = one_blog.id, readername = current_user.username)}}"> Add
+          comment</a>
+        {%else%}
+        <p>There are no comments yet</p>
+        <a href="{{url_for('main.add_comment',blogid = one_blog.id, readername = current_user.username)}}"> Be the first
+          to comment</a>
+        {%endif%}
+      </div>
     </div>
+    <div class="col-md-2">
 
+    </div>
   </div>
+</div>
 {%endblock%}

@@ -9,7 +9,7 @@ from .. import mail
 from flask_mail import Message
 from ..requests import get_quotes
 from sqlalchemy import desc
-
+from markupsafe import Markup, escape
 
 @main.route('/')
 def index():
@@ -43,6 +43,7 @@ def single_blog(blogid):
     abort(404)
 
   format_blog = markdown2.markdown(one_blog.blog_body,extras=["code-friendly","fenced-code-blocks"])
+  
   title = one_blog.title
 
   return render_template('singleblog.html',title = title, format_blog = format_blog,comments = comments,one_blog = one_blog)
