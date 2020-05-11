@@ -65,7 +65,7 @@ def add_blog():
     readers = User.query.filter_by(role_id = 2).all()
     with mail.connect() as con:
       for reader in readers:
-        subject = f"Check out {new_blog.title} on Just Living"
+        subject = f"Check out {new_blog.title} posted on Just Living"
         email = Message(subject = subject, recipients = [reader.email])
         email.body = render_template('email/welcome_user.txt')
         email.html = render_template('email/welcome_user.html')
