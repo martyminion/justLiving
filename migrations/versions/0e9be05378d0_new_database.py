@@ -1,8 +1,8 @@
-"""New Schema
+"""New Database
 
-Revision ID: e8434ec1e8cd
-Revises: ff47376b79ca
-Create Date: 2020-05-11 21:02:29.099358
+Revision ID: 0e9be05378d0
+Revises: 
+Create Date: 2020-05-11 22:53:53.293737
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e8434ec1e8cd'
-down_revision = 'ff47376b79ca'
+revision = '0e9be05378d0'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -23,6 +23,11 @@ def upgrade():
     sa.Column('title', sa.String(length=255), nullable=True),
     sa.Column('category', sa.String(), nullable=True),
     sa.Column('blog_body', sa.String(), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('roles',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=255), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('users',
@@ -56,5 +61,6 @@ def downgrade():
     op.drop_index(op.f('ix_users_username'), table_name='users')
     op.drop_index(op.f('ix_users_email'), table_name='users')
     op.drop_table('users')
+    op.drop_table('roles')
     op.drop_table('blogs')
     # ### end Alembic commands ###
