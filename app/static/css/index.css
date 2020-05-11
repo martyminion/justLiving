@@ -33,7 +33,7 @@ body{
   font-size: 30px ;
 }
 .apiquote{
-  color:rgba(17, 0, 255, 0.959);
+  color:rgba(0, 0, 0, 0.959);
   font-weight: 800;
   
   font-size: 30px ;
@@ -42,4 +42,12 @@ body{
 .btn{
 margin: 20px;
 font-family: 'Amatic SC', cursive ;
+font-size: 50px;
+font-weight: 800;
+}
+
+.indextitle{
+  font-family: 'Pacifico', cursive;
+  font-size: 70px;
+  margin-bottom: 30px;
 }
