@@ -105,9 +105,10 @@ def profile():
   views the writer's profile
   '''
   writer = User.query.filter_by(role_id = 1).first()
+  quote = get_quotes()
 
   title = "Profile"
-  return render_template('profile.html',writer = writer)
+  return render_template('profile.html',writer = writer,title = title, quote = quote)
 
 @main.route("/<role>/update/pic/",methods = ['GET','POST'])
 @login_required

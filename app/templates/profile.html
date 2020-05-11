@@ -1,5 +1,12 @@
 {%extends 'base.html'%}
 
+{%block styles%}
+  {{super()}}
+  <link rel="stylesheet" href="{{url_for('static',filename = 'css/profile.css')}}">
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Comfortaa&family=Galada&family=Inconsolata:wght@300&family=Pacifico&display=swap" rel="stylesheet">
+  
+  {%endblock%}
+
 
 {%block content%}
 <div class="container text-center">
@@ -10,7 +17,7 @@
     <div class="col-md-8 ">
       <div>
       {%if writer.prof_pic%}
-      <img src="{{url_for('static',filename = writer.prof_pic)}}" alt="{{writer.username}}" class="img-thumbnail">
+      <img class="profileimg" src="{{url_for('static',filename = writer.prof_pic)}}" alt="{{writer.username}}" class="img-thumbnail">
       {%else%}
       <p>No Profile Picture</p>
       {%endif%}
@@ -26,11 +33,18 @@
       <form action="{{url_for('main.update_pic',role = writer.role_id)}}" method="POST" enctype="multipart/form-data">
         <label for="photo">Do you want to change your Profile Picture</label>
         <input type="file" name="photo" class="form-control" required>
-        <input type="submit" class="btn form-control">
+        <input type="submit" class="btn form-control ">
       </form>
       {%endif%}
     </div>
     </div>
+  </div>
+  <div class="apiquotebody">
+    <h3 class="apiquote">X AE A-12 Wisdom</h3>
+        <div class="card-body">
+          <blockquote class="apiquote">{{quote.quote}}</blockquote>
+          <cite class="apiquote">{{quote.author}}</cite>
+        </div>
   </div>
 </div>
 {%endblock%}

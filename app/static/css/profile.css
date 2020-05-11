@@ -1,0 +1,43 @@
+.profileimg{
+  width: 200px;
+  height: 200px;
+  display: inline-block;
+  border: solid 1px black;
+  margin: 20px
+}
+
+.username{
+  font-family: 'Inconsolata', monospace;
+  font-size: 30px;
+}
+
+.userbio{
+  font-family: 'Comfortaa', cursive;
+  font-size: 20px;
+}
+
+.apiquote{
+  color:rgba(0, 0, 0, 0.959);
+  font-weight: 800;
+  
+  font-size: 15px ;
+}
+
+.apiquotebody{
+  margin:70px ;
+  border: black solid 1px;
+  box-shadow: -1px 1px 16px -1px rgba(0, 0, 0, 0.75);
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+body{
+  background-image: url(../images/profilebckg.jpg);
+  background-position: center;
+  background-size: cover;
+}
+
+.btn{
+  margin-top: 20px;
+  width: 100px;
+  left: 50%;
+}
