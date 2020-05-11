@@ -102,6 +102,24 @@ def edit_blog(blogid):
 
   return render_template('newblog.html',blogform = form, title = title) 
 
+@main.route('/<blogid>/blog/delete')
+@login_required
+def delete_blog(blogid):
+  '''
+  deletes a blog
+  '''
+  delete_blog = Blog.query.filter_by(id = blogid).first()
+  comments = Comment.query.filter_by(blog_id = blogid).all()
+  #if there exists comments for that blog
+  if comments:
+    for comment in comments:
+      db.session.delete(comment)
+
+  db.session.delete(delete_blog)
+  db.session.commit()
+
+  return redirect(request.referrer)
+
 
 @main.route('/<readername>/<blogid>/new/comment',methods = ["GET","POST"])
 @login_required
