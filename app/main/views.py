@@ -8,6 +8,7 @@ import markdown2
 from .. import mail
 from flask_mail import Message
 from ..requests import get_quotes
+from sqlalchemy import desc
 
 
 @main.route('/')
@@ -26,7 +27,8 @@ def view_blogs():
   '''
   displays all the blogs
   '''
-  blogs = Blog.query.all()
+  blogs = Blog.query.order_by(desc(Blog.id)).all()
+  
   title = "Just Living"
   return render_template('blogs.html',title = title, blogs = blogs)
 
@@ -72,6 +74,30 @@ def add_blog():
     return redirect(url_for('main.view_blogs'))
   title = "New Blog"
   return render_template('newblog.html',blogform = blog_form, title = title)
+
+@main.route("/<blogid>/edit",methods = ['GET','POST'])
+@login_required
+def edit_blog(blogid):
+  '''
+  gives the writer ability to edit the blog
+  '''
+  form = BlogForm()
+  blog = Blog.query.filter_by(id = blogid).first()
+  if request.method == 'POST':
+    title = request.form['title']
+    category = request.form['category']
+    body = request.form['body']
+
+    blog.title = title
+    blog.category = category
+    blog.blog_body = body
+    db.session.commit()
+
+    return redirect(url_for('main.single_blog',blogid = blog.id))
+  title = "Edit Blog"
+
+  return render_template('newblog.html',blogform = form, title = title) 
+
 
 @main.route('/<readername>/<blogid>/new/comment',methods = ["GET","POST"])
 @login_required

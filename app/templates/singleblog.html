@@ -8,6 +8,11 @@
       <h4>{{one_blog.category}}</h4>
       <p>{{format_blog|safe}}</p>
     </div>
+    <div>
+      {%if current_user.role_id == 1%}
+        <a href="{{url_for('main.edit_blog',blogid = one_blog.id)}}">Update Blog</a>
+      {%endif%}
+    </div>
 
     <div>
       <h3>Comments</h3>

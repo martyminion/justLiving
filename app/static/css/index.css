@@ -1,6 +1,6 @@
 .quote{
   font-family: 'Amatic SC', cursive;
-  font-size: 50px;
+  font-size: 40px;
   margin: 10px;
 }
 .centerquote:hover {
@@ -36,7 +36,7 @@ body{
   color:rgba(0, 0, 0, 0.959);
   font-weight: 800;
   
-  font-size: 30px ;
+  font-size: 25px ;
 }
 
 .btn{
