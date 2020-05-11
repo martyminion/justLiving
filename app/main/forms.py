@@ -19,3 +19,10 @@ class CommentForm(FlaskForm):
   '''
   body = TextAreaField('Always be Kind')
   SubmitField = SubmitField('comment')
+
+class UpdateBio(FlaskForm):
+  '''
+  defines the fields for a bio update
+  '''
+  bio = TextAreaField("How do you feel today")
+  submit = SubmitField("Update Bio")

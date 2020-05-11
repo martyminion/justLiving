@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_simplemde import SimpleMDE
 from flask_mail import Mail
+from flask_uploads import UploadSet,configure_uploads,IMAGES
 
 bootstrap = Bootstrap()
 db = SQLAlchemy()
@@ -13,6 +14,7 @@ login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.login'
 simple = SimpleMDE()
 mail = Mail()
+photos = UploadSet('photos',IMAGES)
 def create_app(config_name):
   '''
   this is basically where the app is "manufactured" the dependencies are linked and different config options are set
@@ -36,6 +38,8 @@ def create_app(config_name):
   simple.init_app(app)
   #mail
   mail.init_app(app)
+  #uploading photos
+  configure_uploads(app,photos)
   #Registering a blueprint
   #main
   from .main import main as main_blueprint

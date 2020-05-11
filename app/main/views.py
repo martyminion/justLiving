@@ -2,12 +2,13 @@ from flask import render_template,redirect,request,abort,url_for
 from . import main
 from flask_login import login_required,current_user
 from ..models import Blog,Comment,User
-from .. import db
-from .forms import BlogForm,CommentForm
+from .. import db,photos
+from .forms import BlogForm,CommentForm,UpdateBio
 import markdown2
 from .. import mail
 from flask_mail import Message
 from ..requests import get_quotes
+
 
 @main.route('/')
 def index():
@@ -98,7 +99,45 @@ def delete_comment(commentid):
 
   return redirect(request.referrer)
 
+@main.route('/writer/profile/')
+def profile():
+  '''
+  views the writer's profile
+  '''
+  writer = User.query.filter_by(role_id = 1).first()
 
+  title = "Profile"
+  return render_template('profile.html',writer = writer)
+
+@main.route("/<role>/update/pic/")
+@login_required
+def update_pic(role):
+  '''
+  updates the Writer's profile pic
+  '''
+  writer = User.query.filter_by(role_id = 1).first()
+  if 'photo' in request.files:
+    filename = photos.save(request.files['photo'])
+    path = f'photos/{filename}'
+    writer.prof_pic = path
+    db.session.commit()
+    return redirect(url_for('main.profile')))
+
+@main.route("/<role>/update/bio")
+@login_required
+def update_bio(role):
+  '''
+  updates the writer's bio
+  '''
+  writer = User.query.filter_by(role_id = 1).first()
+
+  form = UpdateBio()
+
+  if form.validate_on_submit():
+    writer.bio = form.bio.data
+    db.session.commit()
+    return redirect(url_for('main.profile'))
+  return render_template('bio.html',form = form)
 
 # @main.route('/send/mail')
 # @login_required
