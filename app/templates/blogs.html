@@ -1,21 +1,31 @@
 {%extends 'base.html'%}
 
 {%block styles%}
-  {{super()}}
-  <!--Imports the simple mde css and js files-->
-  <link rel="stylesheet" href="{{url_for('static',filename = 'css/blog.css')}}">
-  <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Galada&family=Inconsolata:wght@300&family=Pacifico&display=swap" rel="stylesheet">
+{{super()}}
+<!--Imports the simple mde css and js files-->
+<link rel="stylesheet" href="{{url_for('static',filename = 'css/blog.css')}}">
+<link
+  href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Galada&family=Inconsolata:wght@300&family=Pacifico&display=swap"
+  rel="stylesheet">
 {%endblock%}
 
 {%block content%}
-  <div class="container">
-    {%for blog in blogs%}
-    <div>
-      <h2>{{blog.title}}</h2>
-      <p>{{blog.category}}</p>
-      <p>{{blog.blog_body| truncate(100)}}...</p>
-      <a href="{{url_for('main.single_blog',blogid = blog.id)}}">Read more</a>
+<div class="container text-center">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      {%for blog in blogs%}
+      <div class="blogapp">
+        <h2 class="blogtitle">{{blog.title}}</h2>
+        <p>{{blog.category}}</p>
+        <p class="blogtext">{{blog.blog_body| truncate(100)}}...</p>
+        <a href="{{url_for('main.single_blog',blogid = blog.id)}}">Read more</a>
+      </div>
+      {%endfor%}
     </div>
-    {%endfor%}
+    <div class="col-md-2">
+    </div>
   </div>
+  
+</div>
 {%endblock%}

@@ -1,0 +1,31 @@
+.blogtext{
+  font-family: 'Inconsolata', monospace;
+  font-size: 20px;
+}
+.blogtitle{
+  font-family: 'Galada', cursive;
+}
+
+.blogapp:hover {
+  transform: scale(1.05)
+}
+.blogapp{
+  
+  margin-top: 40px;
+  padding: 10px;
+  padding-top: 0;
+  border: 1px solid black;
+  box-shadow: -1px 1px 16px -1px rgba(0, 0, 0, 0.75);
+  margin: 10px;
+  overflow: hidden;
+  transition: transform 1s;
+  margin: 20px;
+  background-color:rgba(255, 255, 255, 0.836);
+
+}
+
+body{
+  background-image: url(../images/all2back.jpg);
+  background-position: center;
+  background-size: cover;
+}
