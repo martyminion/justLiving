@@ -83,6 +83,10 @@ def edit_blog(blogid):
   '''
   form = BlogForm()
   blog = Blog.query.filter_by(id = blogid).first()
+  form.title.data = blog.title
+  form.category.data = blog.category
+  form.body.data = blog.blog_body
+
   if request.method == 'POST':
     title = request.form['title']
     category = request.form['category']
