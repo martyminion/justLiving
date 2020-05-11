@@ -20,7 +20,8 @@ class Config():
   #random quote api config
 
   RANDOM_QUOTE_URL = "http://quotes.stormconsultancy.co.uk/random.json"
-
+  #destination for photos
+  UPLOADED_PHOTOS_DEST = 'app/static/photos'
 
 class ProdConfig(Config):
   '''

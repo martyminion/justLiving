@@ -1,7 +1,7 @@
 <div class="container">
   <nav class="navbar navbar-expand-md navbar-light bg-light">
-    <a class="" href="{{url_for('main.index')}}"><img src="../static/images/brand.jpeg" alt="justliving" width="80"
-        height="80"></a>
+    <a class="" href="{{url_for('main.index')}}"><span>Just Living</span></a>
+
         <a style="padding: 5px;" href="{{url_for('main.index')}}"><span>Home</span></a>
         <a style="padding: 5px;" href="{{url_for('main.view_blogs')}}"><span>Blogs</span></a>
         {%if current_user.is_authenticated%}
@@ -9,6 +9,7 @@
           <a style="padding: 5px;" href="{{url_for('main.add_blog')}}"><span>Add Blog</span></a>
           {%endif%}
         {%endif%}
+        <a style="padding: 5px;" href="{{url_for('main.profile')}}"><span>Writer's Profile</span></a>
 
 
         {%if current_user.is_authenticated%}

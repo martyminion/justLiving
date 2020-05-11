@@ -109,7 +109,7 @@ def profile():
   title = "Profile"
   return render_template('profile.html',writer = writer)
 
-@main.route("/<role>/update/pic/")
+@main.route("/<role>/update/pic/",methods = ['GET','POST'])
 @login_required
 def update_pic(role):
   '''
@@ -121,9 +121,9 @@ def update_pic(role):
     path = f'photos/{filename}'
     writer.prof_pic = path
     db.session.commit()
-    return redirect(url_for('main.profile')))
+    return redirect(url_for('main.profile'))
 
-@main.route("/<role>/update/bio")
+@main.route("/<role>/update/bio",methods = ['GET','POST'])
 @login_required
 def update_bio(role):
   '''
