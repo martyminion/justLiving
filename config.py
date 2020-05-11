@@ -27,6 +27,7 @@ class ProdConfig(Config):
   '''
   sets up the config attributes for a production environment
   '''
+  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
   DEBUG = False
 
 class DevConfig(Config):
