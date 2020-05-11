@@ -102,7 +102,7 @@ def edit_blog(blogid):
 
   return render_template('newblog.html',blogform = form, title = title) 
 
-@main.route('/<blogid>/blog/delete')
+@main.route('/<blogid>/blog/delete',methods = ["GET","POST"])
 @login_required
 def delete_blog(blogid):
   '''
@@ -118,7 +118,7 @@ def delete_blog(blogid):
   db.session.delete(delete_blog)
   db.session.commit()
 
-  return redirect(request.referrer)
+  return redirect(url_for('main.view_blogs'))
 
 
 @main.route('/<readername>/<blogid>/new/comment',methods = ["GET","POST"])
