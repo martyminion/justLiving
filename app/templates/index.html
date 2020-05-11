@@ -3,23 +3,38 @@
 {%block styles%}
   {{super()}}
   <link rel="stylesheet" href="{{url_for('static',filename = 'css/index.css')}}">
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Comfortaa&family=Galada&family=Inconsolata:wght@300&family=Pacifico&display=swap" rel="stylesheet">
   
   {%endblock%}
 
 {%block content%}
-  <div class="container">
+  <div class="container text-center">
 
-    <h2>We have began</h2>
+    <h2>Welcome to Just Living</h2>
 
-    <footer>
-      <div class="card">
+    <p class="centerquote">
+
+      <cite class="quote">'I'm just living life. And if that inspires you, I'm proud. <br>
+        Life is meant to be lived, <br>
+        laugh, till your ribs hurt, <br>
+        love till your heart explodes,
+        and when it's all said and done, you'll be proud to have lived'<br> 
+        </cite> 
+         <span class="blockquote">"Anonymous"</span>
+    </p>
+
+    <div>
+      <a href="" class="btn"></a>
+      <a href="" class="btn"></a>
+    </div>
+      <div class="card centerquote">
+        <h3 class="apiquote">X AE A-12 Wisdom</h3>
         <div class="card-body">
-          <blockquote>{{quote.quote}}</blockquote>
-          <cite>{{quote.author}}</cite>
+          <blockquote class="apiquote">{{quote.quote}}</blockquote>
+          <cite class="apiquote">{{quote.author}}</cite>
         </div>
-
       </div>
-    </footer>
+   
 
   </div>
 {%endblock%}
