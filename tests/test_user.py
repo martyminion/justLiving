@@ -17,7 +17,7 @@ class UserTest(unittest.TestCase):
     db.session.add(self.new_user)
     db.session.commit()
 
-  def tearDown():
+  def tearDown(self):
     '''
     runs after every test to clear the data
     '''
@@ -28,7 +28,7 @@ class UserTest(unittest.TestCase):
     self.assertTrue(self.new_user.pass_secure is not None)
 
   def test_verify_password(self):
-    self.assertTrue(self.new_user.verify_password(password))
+    self.assertTrue(self.new_user.verify_password("banana"))
 
   def test_variable_instantiation(self):
     '''
